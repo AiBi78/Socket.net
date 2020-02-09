@@ -85,9 +85,9 @@ lint/tmp/
 # lint/reports/
 
 /local.properties
-/.idea/
-.idea/
+/.idea
 /.idea/caches
+/.idea/
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
