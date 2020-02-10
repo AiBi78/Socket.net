@@ -1,2 +1,2 @@
-include ':app', ':delivary'
+include ':app', ':socket.net'
 rootProject.name='Delivary.net'
