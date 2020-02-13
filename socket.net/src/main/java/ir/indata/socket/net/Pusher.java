@@ -1,8 +1,8 @@
-package ir.indata.socket;
+package ir.indata.socket.net;
 
 import android.util.Log;
 
-import java.net.URL;
+import ir.indata.socket.VolleyError;
 
 /**
  * Created by Ali Behrozi on 09/02/2020
@@ -23,28 +23,53 @@ public abstract class Pusher<Input, Output> {
      * @param serverUrl  Server Address
      * @param serverPort Server listening port
      */
-    protected synchronized void ceateConnection(URL serverUrl, int serverPort) {
+    protected synchronized void ceateConnection(String serverUrl, int serverPort) {
+
+
+        onConnectionCreated(serverUrl, serverPort);
     }
+
+    /**
+     * Accord when connection created
+     *
+     * @param serverUrl  Server Address
+     * @param serverPort Server listening port
+     */
+    protected void onConnectionCreated(String serverUrl, int serverPort) {
+        Log.i("Socket.net Info",String.format("Connection to %s:%d created",serverUrl.toString(), serverPort));
+    }
+
+
+    /**
+     * Disconnect from the server
+     */
+    protected synchronized void closeConnection() {
+
+    }
+
+    /**
+     * Accord when connection closed
+     * Notify communication is interrupted
+     */
+    protected void onConnectionClosed() {}
+
+    /**
+     * <p>Restart connection to the server .
+     * try to disconnect and connect again .</p>
+     */
+    protected void restartConnection() {}
+
+    /**
+     * Accord when connection restart
+     */
+    protected void onConnectionRestart() {}
 
     protected abstract void doInBackground(String... params);
 
 
 
 
-    /**
-     * Accord when connection created
-     */
-    protected void onConnectionCreated() {}
 
-    /**
-     * Accord when connection closed
-     */
-    protected void onConnectionClosed() {}
-
-    /**
-     * Accord when connection restart
-     */
-    protected void onConnectionRestart() {}
 
 
 
@@ -67,8 +92,8 @@ public abstract class Pusher<Input, Output> {
      *
      * @param message The input message
      */
-    protected void onMessageReceived(Input message) {
-        Log.i("Delivery InputMessage", message.toString());
+    protected void onMessageReceived(Output message) {
+        Log.i("Socket.net InputMessage", message.toString());
     }
 
 
@@ -77,12 +102,12 @@ public abstract class Pusher<Input, Output> {
      *
      * @param message The message to send .
      */
-    public  void sendMessaeg(Output message)
+    public final void sendMessaeg(Output message)
     {
 
     }
 
-    public void imReadMessage() {}
+    public final void imReadMessage() {}
 
 
 
@@ -105,7 +130,7 @@ public abstract class Pusher<Input, Output> {
      * Shows errors when happened
      * @param err The error
      */
-    protected void onError(DeliveryError err) {
+    protected void onError(VolleyError err) {
         // print error message
         Log.e("Message Delivery Error " ,err.toString());
     }

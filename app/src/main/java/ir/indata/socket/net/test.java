@@ -1,7 +1,6 @@
 package ir.indata.socket.net;
 
-import ir.indata.socket.DeliveryError;
-import ir.indata.socket.Pusher;
+import ir.indata.socket.VolleyError;
 
 public class test extends Pusher {
 
@@ -13,7 +12,7 @@ public class test extends Pusher {
 
 
     @Override
-    protected void onError(DeliveryError err) {
+    protected void onError(VolleyError err) {
         super.onError(err);
     }
 }
